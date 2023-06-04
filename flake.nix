@@ -1,7 +1,7 @@
 {
   description = "Development shell";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     rust-overlay.url = "github:oxalica/rust-overlay";
     flake-utils.url = "github:numtide/flake-utils";
   };
@@ -12,14 +12,20 @@
         pkgs = import nixpkgs {
           inherit system overlays;
         };
+        rust = pkgs.rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
+          extensions = [ "rust-src" ];
+        });
       in
       with pkgs;
       {
         devShells.default = mkShell {
-          buildInputs = [
-            rust-bin.beta.latest.default
-            rust-analyzer
+          nativeBuildInputs = [
+            rust
+            rust-analyzer-unwrapped
           ];
+          shellHook = ''
+            export RUST_SRC_PATH="${rust}/lib/rustlib/src/rust/library";
+          '';
         };
       }
     );
