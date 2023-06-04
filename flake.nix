@@ -29,9 +29,7 @@
             rust
             rust-analyzer-unwrapped
           ];
-          shellHook = ''
-            export RUST_SRC_PATH="${rust}/lib/rustlib/src/rust/library";
-          '';
+          RUST_SRC_PATH = "${rust}/lib/rustlib/src/rust/library";
         };
       }
     );
