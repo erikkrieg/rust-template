@@ -18,14 +18,12 @@
         pkgs = import nixpkgs {
           inherit system overlays;
         };
-        rust = pkgs.rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
-          extensions = [ "rust-src" ];
-        });
+        rust = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
       in
       with pkgs;
       {
         devShells.default = mkShell {
-          nativeBuildInputs = [
+          buildInputs = [
             rust
             rust-analyzer-unwrapped
           ];
