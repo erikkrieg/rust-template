@@ -44,6 +44,9 @@
             shellHook = ''
               export CARGO_HOME="$PWD/.cargo"
               export PATH="$CARGO_HOME/bin:$PATH"
+              if [ ! -f Cargo.toml ]; then
+                cargo init
+              fi
             '';
           };
         };
