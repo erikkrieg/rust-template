@@ -44,7 +44,8 @@
             shellHook = ''
               export CARGO_HOME="$PWD/.cargo"
               export PATH="$CARGO_HOME/bin:$PATH"
-              if [ ! -f Cargo.toml ]; then
+              export PROJECT_NAME="$(basename "$(git rev-parse --show-toplevel)")"
+              if [ ! -f Cargo.toml && $PROJECT_NAME != "rust-template" ]; then
                 cargo init
               fi
             '';
