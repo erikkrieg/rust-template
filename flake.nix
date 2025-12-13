@@ -18,11 +18,6 @@
           (final: prev: with prev.rust-bin; {
             rustToolchain = fromRustupToolchainFile ./rust-toolchain.toml;
           })
-          (final: prev: {
-            cargo-deny = prev.cargo-deny.overrideAttrs (oldAttrs: {
-              buildInputs = oldAttrs.buildInputs ++ (prev.lib.optionals prev.stdenv.isDarwin [ prev.darwin.apple_sdk.frameworks.SystemConfiguration ]);
-            });
-          })
         ];
         pkgs = import nixpkgs { inherit overlays system; };
         rust_packages = with pkgs; [
